@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     WebView weatherWebView;
     LocationManager locationManager;
     final static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
+    double lat, lon;
 
     private static class MyHandler extends Handler{
         private final WeakReference<MainActivity> mActivity;
@@ -107,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            final double lat = location.getLatitude();
-            final double lon = location.getLongitude();
+            lat = location.getLatitude();
+            lon = location.getLongitude();
             System.out.println(lat);
             Log.d("TAG", "LAT: "+lat+"LON: "+lon);
             new Thread(new Runnable() {
@@ -144,16 +145,14 @@ public class MainActivity extends AppCompatActivity {
         textViewLon = (TextView) findViewById(R.id.textView2);
         cityTextView = (TextView) findViewById(R.id.textView3);
         weatherWebView = (WebView) findViewById(R.id.weatherWebView);
-
-
-//        showButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:"+lat+","+lon+
-//                "?z=14"));
-//                startActivity(myIntent);
-//            }
-//        });
+        showButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:"+lat+","+lon+
+                "?z=14"));
+                startActivity(myIntent);
+            }
+        });
 
 
     }
